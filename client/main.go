@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net/http"
 	"os"
 	"time"
 
@@ -9,6 +11,22 @@ import (
 )
 
 var mySigningKey = []byte(os.Getenv("MY_JWT_TOKEN"))
+var port = ":9000"
+
+func homePage(w http.ResponseWriter, r *http.Request) {
+
+	validToken, err := GenerateJWT()
+
+	if err != nil {
+		fmt.Fprintf(w, err.Error())
+	}
+
+	fmt.Fprintf(w, validToken)
+
+	// fmt.Fprintf(w, "Hello Fantastic. What's going on? ")
+	// fmt.Println("Endpoint Hit: homePage")
+
+}
 
 // GenerateJWT - generates JWT token
 func GenerateJWT() (string, error) {
@@ -31,13 +49,12 @@ func GenerateJWT() (string, error) {
 
 }
 
+func handleRequests() {
+	http.HandleFunc("/", homePage)
+	log.Fatal(http.ListenAndServe(port, nil))
+}
+
 func main() {
-	fmt.Println("simple client is running")
 
-	tokenString, err := GenerateJWT()
-	if err != nil {
-		fmt.Println("Something went wrong GeneratingJWT: %s", err.Error())
-	}
-
-	fmt.Println(tokenString)
+	handleRequests()
 }
