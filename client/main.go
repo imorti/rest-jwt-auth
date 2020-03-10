@@ -52,6 +52,7 @@ func GenerateJWT() (string, error) {
 func handleRequests() {
 	http.HandleFunc("/", homePage)
 	log.Fatal(http.ListenAndServe(port, nil))
+
 }
 
 func main() {
