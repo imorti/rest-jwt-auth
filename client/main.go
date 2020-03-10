@@ -2,13 +2,15 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
-var mySigningKey = []byte("14PacCity")
+var mySigningKey = []byte(os.Getenv("MY_JWT_TOKEN"))
 
+// GenerateJWT - generates JWT token
 func GenerateJWT() (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 
