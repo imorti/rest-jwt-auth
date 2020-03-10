@@ -11,7 +11,7 @@ import (
 )
 
 var mySigningKey = []byte(os.Getenv("MY_JWT_TOKEN"))
-var port = ":9000"
+var port = ":9002"
 
 func homePage(w http.ResponseWriter, r *http.Request) {
 
